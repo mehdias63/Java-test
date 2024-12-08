@@ -1,15 +1,15 @@
-const counterValue = document.querySelector('.numCount')
-let count = Number(counterValue.textContent)
-const button = document.querySelectorAll('.btn')
+const showModalBtn = document.querySelector('.show-modal')
+const closeModalBtn = document.querySelector('.close-modal')
+const backdrop = document.querySelector('.backdrop')
+const modal = document.querySelector('.modal')
 
-button.forEach(btn => {
-	btn.addEventListener('click', () => {
-		const classList = btn.classList
-		if (classList.contains('increment')) count++
-		else if (classList.contains('decrement')) count--
-		else count = 0
-		if (count > 0) counterValue.style.color = 'green'
-		else counterValue.style.color = 'red'
-		counterValue.textContent = count
-	})
+showModalBtn.addEventListener('click', () => {
+	backdrop.classList.remove('hidden')
+	modal.classList.remove('hidden')
 })
+function closeModal() {
+	backdrop.classList.add('hidden')
+	modal.classList.add('hidden')
+}
+closeModalBtn.addEventListener('click', closeModal)
+backdrop.addEventListener('click', closeModal)
