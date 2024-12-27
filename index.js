@@ -1,15 +1,31 @@
-const showModalBtn = document.querySelector('.show-modal')
-const closeModalBtn = document.querySelector('.close-modal')
-const backdrop = document.querySelector('.backdrop')
-const modal = document.querySelector('.modal')
+const getDataBtn = document.querySelector('.get-data')
+const postDataBtn = document.querySelector('.post-data')
 
-showModalBtn.addEventListener('click', () => {
-	backdrop.classList.remove('hidden')
-	modal.classList.remove('hidden')
+getDataBtn.addEventListener('click', getUsers)
+postDataBtn.addEventListener('click', loginUsers)
+
+const app = axios.create({
+	baseURL: 'https://reqres.in/api',
 })
-function closeModal() {
-	backdrop.classList.add('hidden')
-	modal.classList.add('hidden')
+
+function getUsers() {
+	app
+		.get('/users')
+		.then(({ data }) => {
+			console.log(data)
+		})
+		.catch(err => console.log(err))
 }
-closeModalBtn.addEventListener('click', closeModal)
-backdrop.addEventListener('click', closeModal)
+
+async function loginUsers() {
+	const user = {
+		email: 'eve.holt@reqres.in',
+		password: 'cityslicka',
+	}
+	try {
+		const { data } = await app.post('/login', user)
+		console.log(data)
+	} catch (err) {
+		console.log(err.response.data.error)
+	}
+}
